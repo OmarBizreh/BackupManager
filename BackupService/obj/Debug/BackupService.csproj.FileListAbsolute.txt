@@ -1,0 +1,16 @@
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\x64\SQLite.Interop.dll
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\x86\SQLite.Interop.dll
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\BackupService.exe.config
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\BackupService.exe
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\BackupService.pdb
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\EntityFramework.dll
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\System.Data.SQLite.dll
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\EntityFramework.xml
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\bin\Debug\System.Data.SQLite.xml
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\obj\Debug\BackupService.exe
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\obj\Debug\BackupService.pdb
+C:\Users\Omar\documents\visual studio 2013\Projects\Backup_Manager\BackupService\obj\Debug\BackupService.csprojResolveAssemblyReference.cache

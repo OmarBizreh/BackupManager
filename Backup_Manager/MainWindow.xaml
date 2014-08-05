@@ -1,0 +1,68 @@
+﻿<Window x:Class="Backup_Manager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Backup_Manager.Core.Lists"
+        xmlns:my="clr-namespace:Backup_Manager.Core.Commands"
+        Title="Backup Manager" Height="350" Width="525" Loaded="Window_Loaded"
+        SizeToContent="Width" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <local:ProjectsList x:Key="lstProjects" />
+        <my:ExitCommand x:Key="exit" />
+    </Window.Resources>
+    <DockPanel DataContext="{StaticResource lstProjects}" LastChildFill="True">
+        <Menu Height="30"  DockPanel.Dock="Top">
+            <MenuItem Header="File" Margin="0,5,0,0">
+                <MenuItem Header="Settings"/>
+                <MenuItem Header="Exit" x:Name="menuExit" Command="{StaticResource exit}" />
+            </MenuItem>
+            <MenuItem Header="Projects" Margin="0,5,0,0">
+                <MenuItem Header="New" x:Name="menuNewProject" Click="menuNewProject_Click" />
+                <MenuItem Header="Refresh" x:Name="menuRefreshProjects" Click="menuRefreshProjects_Click" />
+            </MenuItem>
+        </Menu>
+        <Button x:Name="btnConnectToDatabase" DockPanel.Dock="Top" Content="Connect to database" 
+                Click="btnConnectDatabase" Height="20" IsDefault="True" Cursor="Hand" HorizontalAlignment="Right" Width="250" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" />
+        <TextBox x:Name="txtLog" DockPanel.Dock="Right" TextWrapping="Wrap" Grid.Column="1" VerticalScrollBarVisibility="Auto" Width="250" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" />
+        <ListView ContextMenuOpening="lstViewProjects_ContextMenuOpening" DockPanel.Dock="Left" Margin="0,-20,0,0"
+                    BorderBrush="#FFE2E2E2" x:Name="lstViewProjects" ItemsSource="{Binding}">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Edit" x:Name="menuEditProjet" Click="menuEditProjet_Click" />
+                    <MenuItem Header="Delete" x:Name="menuDeleteProject" Click="menuDeleteProject_Click" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Project Title" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Width="Auto"  Text="{Binding ProjectName}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Last Backup" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Width="Auto" Text="{Binding LastBackup}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Source Code Folder" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Open" ToolTip="{Binding SourceLocation}" x:Name="lstViewButton" Click="lstViewButton_Click" Cursor="Hand" Width="Auto" Tag="{Binding SourceLocation}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Backup Folder" Width="Auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Open" ToolTip="{Binding BackupDestination}" x:Name="lstViewButton" Click="lstViewButton_Click" Cursor="Hand" Width="Auto" Tag="{Binding BackupDestination}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</Window>
