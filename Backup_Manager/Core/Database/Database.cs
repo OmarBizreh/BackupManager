@@ -3,7 +3,6 @@ using Backup_Manager.Core.Lists;
 using Backup_Manager.Core.Objects;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.IO;
 
@@ -164,6 +163,16 @@ namespace Backup_Manager.Core.Database
             return val;
         }
 
+        public void AddSettings(SettingsTableValueClass settings)
+        {
+            string columns = string.Join(",", SettingsTable.BackupTime, SettingsTable.EnableNotifications, SettingsTable.SourceEmail, SettingsTable.DestinationEmail, SettingsTable.Username, SettingsTable.Password, SettingsTable.IncomingMailServer, SettingsTable.OutgoingMailServer);
+
+            this.AddRows(SettingsTable.TableName, columns.Split(';'),
+                 new string[]{
+            settings.BackupTime, settings.EnableNotifications ? "0" : "1", settings.SourceEmail,settings.DestinationEmail,settings.Username,settings.Password,settings.IncomingMailServer,settings.OutgoingMailServer
+            });
+        }
+
         public void DeleteProject(int ProjectID)
         {
             using (SQLiteCommand Command = new SQLiteCommand(this.Connection))
@@ -234,55 +243,6 @@ namespace Backup_Manager.Core.Database
             return list;
         }
 
-        protected void OnProjectAdded(NewProjectEventArgs e)
-        {
-            ProjectAddedEvent(this, e);
-        }
-
-        protected void OnProjectDelete(ProjectDeletedEventArgs e)
-        {
-            ProjectDeletedEvent(this, e);
-        }
-
-        /// <summary>
-        /// Add rows to any table in database
-        /// </summary>
-        /// <param name="Table">Table Name</param>
-        /// <param name="Columns">Columns effected</param>
-        /// <param name="Values">Columns Values</param>
-        /// <returns>Number of rows affected</returns>
-        /// <remarks>This method is internally used by Database Class
-        /// to create insert commands for any table in the database</remarks>
-        private int AddRows(string Table, string[] Columns, params string[] Values)
-        {
-            if (this.Connection.State != System.Data.ConnectionState.Open)
-                return -1;
-
-            string SqlCommand = string.Join(" ", "insert into", Table);
-
-            SqlCommand = string.Join(" ", SqlCommand, "(", string.Join(",", Columns), ")");
-            SqlCommand = string.Join(" ", SqlCommand, "values", "(", "'" + string.Join("','", Values) + "'", ")");
-
-            int result = 0;
-
-            using (SQLiteCommand comm = new SQLiteCommand(SqlCommand, this.Connection))
-            {
-                comm.CommandType = System.Data.CommandType.Text;
-                result = comm.ExecuteNonQuery();
-            }
-            return result;
-        }
-
-        public void AddSettings(SettingsTableValueClass settings)
-        {
-            string columns = string.Join(",", SettingsTable.BackupTime, SettingsTable.EnableNotifications, SettingsTable.SourceEmail, SettingsTable.DestinationEmail, SettingsTable.Username, SettingsTable.Password, SettingsTable.IncomingMailServer, SettingsTable.OutgoingMailServer);
-
-            this.AddRows(SettingsTable.TableName, columns.Split(';'),
-                 new string[]{
-            settings.BackupTime, settings.EnableNotifications ? "0" : "1", settings.SourceEmail,settings.DestinationEmail,settings.Username,settings.Password,settings.IncomingMailServer,settings.OutgoingMailServer
-            });
-        }
-
         public SettingsTableValueClass ReadSettings(string condition = "1=1")
         {
             List<string> SettingsTableColumns = new List<string>()
@@ -299,7 +259,6 @@ namespace Backup_Manager.Core.Database
 
             string command = string.Join(" ", "select", string.Join(",", SettingsTableColumns), "from", SettingsTable.TableName, "where", condition);
             SettingsTableValueClass settings = new SettingsTableValueClass();
-
 
             using (SQLiteCommand com = new SQLiteCommand(command, this.Connection))
             {
@@ -338,6 +297,45 @@ namespace Backup_Manager.Core.Database
             {
                 com.ExecuteNonQuery();
             }
+        }
+
+        protected void OnProjectAdded(NewProjectEventArgs e)
+        {
+            ProjectAddedEvent(this, e);
+        }
+
+        protected void OnProjectDelete(ProjectDeletedEventArgs e)
+        {
+            ProjectDeletedEvent(this, e);
+        }
+
+        /// <summary>
+        /// Add rows to any table in database
+        /// </summary>
+        /// <param name="Table">Table Name</param>
+        /// <param name="Columns">Columns effected</param>
+        /// <param name="Values">Columns Values</param>
+        /// <returns>Number of rows affected</returns>
+        /// <remarks>This method is internally used by Database Class
+        /// to create insert commands for any table in the database</remarks>
+        private int AddRows(string Table, string[] Columns, params string[] Values)
+        {
+            if (this.Connection.State != System.Data.ConnectionState.Open)
+                return -1;
+
+            string SqlCommand = string.Join(" ", "insert into", Table);
+
+            SqlCommand = string.Join(" ", SqlCommand, "(", string.Join(",", Columns), ")");
+            SqlCommand = string.Join(" ", SqlCommand, "values", "(", "'" + string.Join("','", Values) + "'", ")");
+
+            int result = 0;
+
+            using (SQLiteCommand comm = new SQLiteCommand(SqlCommand, this.Connection))
+            {
+                comm.CommandType = System.Data.CommandType.Text;
+                result = comm.ExecuteNonQuery();
+            }
+            return result;
         }
     }
 }

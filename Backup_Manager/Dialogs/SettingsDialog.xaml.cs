@@ -1,6 +1,5 @@
 ﻿using Backup_Manager.Core.Objects;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Backup_Manager.Dialogs
 {
@@ -13,7 +12,9 @@ namespace Backup_Manager.Dialogs
         {
             InitializeComponent();
         }
+
         internal SettingsTableValueClass settings { get; set; }
+
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             this.settings = grd.DataContext as SettingsTableValueClass;

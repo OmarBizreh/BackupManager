@@ -5,7 +5,7 @@
         xmlns:conv="clr-namespace:Backup_Manager.Core.ValueConvertors"
         Title="SettingsDialog" Height="432.97" Width="421.421" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Window.Resources>
-        <settings:SettingsTableValueClass x:Key="MySettings"/>
+        <settings:SettingsTableValueClass x:Key="MySettings" />
         <conv:IntToBoolean x:Key="intToBoolean" />
     </Window.Resources>
     <Grid DataContext="{StaticResource MySettings}" x:Name="grd">
@@ -31,8 +31,8 @@
                 <TextBox x:Name="txtIncomingMailServer" Text="{Binding IncomingMailServer}" Height="23" Margin="143,77,10,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" />
                 <TextBox x:Name="txtOutgoingMailServer" Text="{Binding OutgoingMailServer}" Height="23" Margin="143,105,10,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" />
                 <Separator Height="7" Margin="0,133,0,0" VerticalAlignment="Top" Background="#FFE8E8E8" Grid.Row="1" />
-                <TextBlock HorizontalAlignment="Left" Margin="23,148,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Source Email:" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtSourceEmail" Text="{Binding SourceEmail}" HorizontalAlignment="Left" Height="23" Margin="98,145,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="273"/>
+                <TextBlock HorizontalAlignment="Left" Margin="23,148,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Source Email:" VerticalAlignment="Top" />
+                <TextBox x:Name="txtSourceEmail" Text="{Binding SourceEmail}" HorizontalAlignment="Left" Height="23" Margin="98,145,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="273" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Timing Settings" Margin="10,10,10,0" VerticalAlignment="Top" Height="67">

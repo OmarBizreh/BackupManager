@@ -31,6 +31,7 @@ namespace Backup_Manager.Core.Objects
                 OnPropertyChanged("BackupTime");
             }
         }
+
         public string DestinationEmail
         {
             get { return _destinationemail; }

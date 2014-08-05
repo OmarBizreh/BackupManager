@@ -12,7 +12,7 @@
     <DockPanel DataContext="{StaticResource lstProjects}" LastChildFill="True">
         <Menu Height="30"  DockPanel.Dock="Top">
             <MenuItem Header="File" Margin="0,5,0,0">
-                <MenuItem Header="Settings" x:Name="menuSettings" Click="menuSettings_Click"/>
+                <MenuItem Header="Settings" x:Name="menuSettings" Click="menuSettings_Click" />
                 <MenuItem Header="Exit" x:Name="menuExit" Command="{StaticResource exit}" />
             </MenuItem>
             <MenuItem Header="Projects" Margin="0,5,0,0">
@@ -20,7 +20,7 @@
                 <MenuItem Header="Refresh" x:Name="menuRefreshProjects" Click="menuRefreshProjects_Click" />
             </MenuItem>
         </Menu>
-        <Button x:Name="btnConnectToDatabase" DockPanel.Dock="Top" Content="Connect to database" 
+        <Button x:Name="btnConnectToDatabase" DockPanel.Dock="Top" Content="Connect to database"
                 Click="btnConnectDatabase" Height="20" IsDefault="True" Cursor="Hand" HorizontalAlignment="Right" Width="250" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" />
         <TextBox x:Name="txtLog" DockPanel.Dock="Right" TextWrapping="Wrap" Grid.Column="1" VerticalScrollBarVisibility="Auto" Width="250" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" />
         <ListView ContextMenuOpening="lstViewProjects_ContextMenuOpening" DockPanel.Dock="Left" Margin="0,-20,0,0"

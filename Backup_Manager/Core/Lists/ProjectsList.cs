@@ -1,7 +1,7 @@
 ﻿using Backup_Manager.Core.Objects;
-using System.Linq;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Backup_Manager.Core.Lists
 {
@@ -12,7 +12,6 @@ namespace Backup_Manager.Core.Lists
     /// </summary>
     public class ProjectsList : ObservableCollection<ProjectsTableValueClass>
     {
-
         public List<ProjectsTableValueClass> GetProject(int ProjectID)
         {
             var q = from project in this.Items
