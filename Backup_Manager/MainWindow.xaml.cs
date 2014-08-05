@@ -133,11 +133,6 @@ namespace Backup_Manager
             dialog.ShowDialog();
         }
 
-        private void menuExit_Click(object sender, RoutedEventArgs e)
-        {
-            App.Current.Shutdown();
-        }
-
         private void menuNewProject_Click(object sender, RoutedEventArgs e)
         {
             ProjectDialog dialog = new ProjectDialog();
@@ -190,6 +185,23 @@ namespace Backup_Manager
         {
             lstProjects = (ProjectsList)this.Resources["lstProjects"];
             Initialize();
+        }
+
+        private void menuSettings_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsDialog settings = new SettingsDialog();
+
+            settings.settings = database.ReadSettings();
+
+            if (!settings.ShowDialog().Value)
+                return;
+
+            if (database.ReadSettings().SourceEmail == null)
+                database.AddSettings(settings.settings);
+            else
+                database.UpdateSettings(settings.settings);
+
+            settings.Close();
         }
     }
 }

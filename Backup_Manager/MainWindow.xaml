@@ -12,7 +12,7 @@
     <DockPanel DataContext="{StaticResource lstProjects}" LastChildFill="True">
         <Menu Height="30"  DockPanel.Dock="Top">
             <MenuItem Header="File" Margin="0,5,0,0">
-                <MenuItem Header="Settings"/>
+                <MenuItem Header="Settings" x:Name="menuSettings" Click="menuSettings_Click"/>
                 <MenuItem Header="Exit" x:Name="menuExit" Command="{StaticResource exit}" />
             </MenuItem>
             <MenuItem Header="Projects" Margin="0,5,0,0">

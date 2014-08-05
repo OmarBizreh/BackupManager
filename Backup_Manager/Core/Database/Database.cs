@@ -3,6 +3,7 @@ using Backup_Manager.Core.Lists;
 using Backup_Manager.Core.Objects;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.IO;
 
@@ -46,6 +47,18 @@ namespace Backup_Manager.Core.Database
                         string.Join(" ", ProjectsTable.BackupDestination, "varchar2(500),"),
                         string.Join(" ", ProjectsTable.SourceLocation, "varchar2(500),"),
                         string.Join(" ", ProjectsTable.LastBackup, "varchar2(50)"), ")");
+
+                    Command.ExecuteNonQuery();
+
+                    Command.CommandText = string.Join(" ", "create", "table", SettingsTable.TableName, "(",
+                        string.Join(" ", SettingsTable.BackupTime, "varchar2(10),"),
+                        string.Join(" ", SettingsTable.DestinationEmail, "varchar2(50),"),
+                        string.Join(" ", SettingsTable.EnableNotifications, "int(1),"),
+                        string.Join(" ", SettingsTable.IncomingMailServer, "varchar2(50),"),
+                        string.Join(" ", SettingsTable.OutgoingMailServer, "varchar2(50),"),
+                        string.Join(" ", SettingsTable.Password, "varchar2(50),"),
+                        string.Join(" ", SettingsTable.SourceEmail, "varchar2(50),"),
+                        string.Join(" ", SettingsTable.Username, "varchar2(50)"), ")");
 
                     Command.ExecuteNonQuery();
                 }
@@ -258,6 +271,73 @@ namespace Backup_Manager.Core.Database
                 result = comm.ExecuteNonQuery();
             }
             return result;
+        }
+
+        public void AddSettings(SettingsTableValueClass settings)
+        {
+            string columns = string.Join(",", SettingsTable.BackupTime, SettingsTable.EnableNotifications, SettingsTable.SourceEmail, SettingsTable.DestinationEmail, SettingsTable.Username, SettingsTable.Password, SettingsTable.IncomingMailServer, SettingsTable.OutgoingMailServer);
+
+            this.AddRows(SettingsTable.TableName, columns.Split(';'),
+                 new string[]{
+            settings.BackupTime, settings.EnableNotifications ? "0" : "1", settings.SourceEmail,settings.DestinationEmail,settings.Username,settings.Password,settings.IncomingMailServer,settings.OutgoingMailServer
+            });
+        }
+
+        public SettingsTableValueClass ReadSettings(string condition = "1=1")
+        {
+            List<string> SettingsTableColumns = new List<string>()
+            {
+                SettingsTable.BackupTime,
+                SettingsTable.DestinationEmail,
+                SettingsTable.EnableNotifications,
+                SettingsTable.IncomingMailServer,
+                SettingsTable.OutgoingMailServer,
+                SettingsTable.Password,
+                SettingsTable.SourceEmail,
+                SettingsTable.Username
+            };
+
+            string command = string.Join(" ", "select", string.Join(",", SettingsTableColumns), "from", SettingsTable.TableName, "where", condition);
+            SettingsTableValueClass settings = new SettingsTableValueClass();
+
+
+            using (SQLiteCommand com = new SQLiteCommand(command, this.Connection))
+            {
+                using (SQLiteDataReader reader = com.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        settings.BackupTime = reader.GetString(SettingsTableColumns.IndexOf(SettingsTable.BackupTime));
+                        settings.DestinationEmail = reader.GetString(SettingsTableColumns.IndexOf(SettingsTable.DestinationEmail));
+                        settings.EnableNotifications = reader.GetValue(SettingsTableColumns.IndexOf(SettingsTable.EnableNotifications)).ToString() == "1" ? true : false;
+                        settings.IncomingMailServer = reader.GetString(SettingsTableColumns.IndexOf(SettingsTable.IncomingMailServer));
+                        settings.OutgoingMailServer = reader.GetString(SettingsTableColumns.IndexOf(SettingsTable.OutgoingMailServer));
+                        settings.Password = reader.GetString(SettingsTableColumns.IndexOf(SettingsTable.Password));
+                        settings.SourceEmail = reader.GetString(SettingsTableColumns.IndexOf(SettingsTable.SourceEmail));
+                        settings.Username = reader.GetString(SettingsTableColumns.IndexOf(SettingsTable.Username));
+                    }
+                }
+            }
+
+            return settings;
+        }
+
+        public void UpdateSettings(SettingsTableValueClass updatedSettings)
+        {
+            string command = string.Join(" ", "update", SettingsTable.TableName, "set",
+                SettingsTable.BackupTime, "=", "'" + updatedSettings.BackupTime + "',",
+                SettingsTable.DestinationEmail, "=", "'" + updatedSettings.DestinationEmail + "',",
+                SettingsTable.EnableNotifications, "=", (updatedSettings.EnableNotifications ? "1" : "0") + ",",
+                SettingsTable.IncomingMailServer, "=", "'" + updatedSettings.IncomingMailServer + "',",
+                SettingsTable.OutgoingMailServer, "=", "'" + updatedSettings.OutgoingMailServer + "',",
+                SettingsTable.Password, "=", "'" + updatedSettings.Password + "',",
+                SettingsTable.SourceEmail, "=", "'" + updatedSettings.SourceEmail + "',",
+                SettingsTable.Username, "=", "'" + updatedSettings.Username + "'");
+
+            using (SQLiteCommand com = new SQLiteCommand(command, this.Connection))
+            {
+                com.ExecuteNonQuery();
+            }
         }
     }
 }
